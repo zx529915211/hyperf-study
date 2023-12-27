@@ -45,6 +45,10 @@ class AppExceptionHandler extends ExceptionHandler
     {
         $formatter = make(FormatterInterface::class);
 
+//        if($throwable instanceof \ErrorException){
+//            $this->logger->error($throwable->getMessage());
+//        }
+
         //业务异常处理
         if ($throwable instanceof BusinessException) {
             return $this->response->fail($throwable->getCode(), $throwable->getMessage());
@@ -52,6 +56,8 @@ class AppExceptionHandler extends ExceptionHandler
 
         //HttpException
         if ($throwable instanceof HttpException) {
+            // 阻止异常冒泡
+            $this->stopPropagation();
             return $this->response->fail($throwable->getStatusCode(), $throwable->getMessage());
         }
 
