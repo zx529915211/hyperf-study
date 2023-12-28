@@ -31,8 +31,10 @@ class IndexController extends AbstractController
     public function info()
     {
         $id = (int) $this->request->input('id', 0);
+        $a = [];
+        echo $a[1];
         if($id < 0){
-            throw new BusinessException("id无效");
+            throw new BusinessException(trans('params.id_invalid'));
         }
         return $this->response->success(['info' => 'data info']);
     }
