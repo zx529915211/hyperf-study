@@ -31,6 +31,7 @@ class IndexController extends AbstractController
 
     public function info()
     {
+        return convert_size(memory_get_usage(true));
         $id = (int) $this->request->input('id', 0);
         $a = [];
         echo $a[1];
