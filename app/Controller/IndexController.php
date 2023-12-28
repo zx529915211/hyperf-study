@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Constants\ErrorCode;
 use App\Exception\BusinessException;
 use Hyperf\HttpServer\Annotation\AutoController;
 
@@ -33,8 +34,8 @@ class IndexController extends AbstractController
         $id = (int) $this->request->input('id', 0);
         $a = [];
         echo $a[1];
-        if($id < 0){
-            throw new BusinessException(trans('params.id_invalid'));
+        if ($id < 0) {
+            throw new BusinessException(ErrorCode::PARAMS_ID_INVALID);
         }
         return $this->response->success(['info' => 'data info']);
     }
