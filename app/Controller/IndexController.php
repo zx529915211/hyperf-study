@@ -13,6 +13,7 @@ namespace App\Controller;
 
 use App\Constants\ErrorCode;
 use App\Exception\BusinessException;
+use Hyperf\DbConnection\Db;
 use Hyperf\HttpServer\Annotation\AutoController;
 
 #[AutoController]
@@ -31,13 +32,14 @@ class IndexController extends AbstractController
 
     public function info()
     {
-        return convert_size(memory_get_usage(true));
-        $id = (int) $this->request->input('id', 0);
-        $a = [];
-        echo $a[1];
-        if ($id < 0) {
-            throw new BusinessException(ErrorCode::PARAMS_ID_INVALID);
-        }
-        return $this->response->success(['info' => 'data info']);
+//        $id = (int) $this->request->input('id', 0);
+//        $a = [];
+//        echo $a[1];
+//        if ($id < 0) {
+//            throw new BusinessException(ErrorCode::PARAMS_ID_INVALID);
+//        }
+//        return $this->response->success(['info' => 'data info']);
+        $result = Db::select('select * from email_code;');
+        return $result;
     }
 }

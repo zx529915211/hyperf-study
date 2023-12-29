@@ -26,7 +26,8 @@
         "hyperf/memory": "~2.2.0",
         "hyperf/process": "~2.2.0",
         "hyperf/redis": "~2.2.0",
-        "hyperf/translation": "2.*"
+        "hyperf/translation": "2.*",
+        "phpmailer/phpmailer": "^6.9"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
