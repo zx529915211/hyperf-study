@@ -11,9 +11,11 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Amqp\Producer\MailProducer;
 use App\Components\Email\EmailInterface;
 use App\Constants\ErrorCode;
 use App\Exception\BusinessException;
+use Hyperf\Amqp\Producer;
 use Hyperf\DbConnection\Db;
 use Hyperf\HttpServer\Annotation\AutoController;
 
@@ -63,6 +65,24 @@ class IndexController extends AbstractController
         });
         $wg->wait();
         $runTime = '耗时: ' . (microtime(true) - $startTime) . ' s';
+        return ['time' => date('Y-m-d H:i:s'), 'runtime' => $runTime];
+    }
+
+    public function amqpEmail()
+    {
+        $startTime = microtime(true);
+
+        $mailInfo = [
+            'receiver' => '278299648@qq.com',
+            'subject' => '邮件测试标题111',
+            'body' => '<b style="color: #f00;">邮件测试内容222</b>',
+        ];
+        $message = new MailProducer($mailInfo);
+        $producer = di()->get(Producer::class);
+        $producer->produce($message);
+
+        $runTime = '耗时: ' . (microtime(true) - $startTime) . ' s';
+
         return ['time' => date('Y-m-d H:i:s'), 'runtime' => $runTime];
     }
 
