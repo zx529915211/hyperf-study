@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Components\Email\EmailInterface;
 use App\Constants\ErrorCode;
 use App\Exception\BusinessException;
 use Hyperf\DbConnection\Db;
@@ -42,4 +43,28 @@ class IndexController extends AbstractController
         $result = Db::select('select * from email_code;');
         return $result;
     }
+
+    public function send()
+    {
+        $startTime = microtime(true);
+        $wg = new \Hyperf\Utils\WaitGroup();
+        $wg->add(2);
+//        $email = di()->get(EmailInterface::class);
+        co(function () use ($wg) {
+            $email = make(EmailInterface::class);
+//            sleep(5);
+            $email->send("278299648@qq.com",'test1','hyperf email success');
+            $wg->done();
+        });
+        co(function () use ($wg) {
+            $email = make(EmailInterface::class);
+            $email->send("278299648@qq.com",'test1','hyperf email success');
+            $wg->done();
+        });
+        $wg->wait();
+        $runTime = '耗时: ' . (microtime(true) - $startTime) . ' s';
+        return ['time' => date('Y-m-d H:i:s'), 'runtime' => $runTime];
+    }
+
+
 }

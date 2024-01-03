@@ -10,4 +10,5 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 return [
+    \App\Components\Email\EmailInterface::class => \App\Components\Email\EmailFactory::class,
 ];
