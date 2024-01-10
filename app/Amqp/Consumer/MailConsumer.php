@@ -10,7 +10,7 @@ use Hyperf\Amqp\Annotation\Consumer;
 use Hyperf\Amqp\Message\ConsumerMessage;
 use PhpAmqpLib\Message\AMQPMessage;
 
-#[Consumer(exchange: 'mail', routingKey: 'mail', queue: 'mail', name: "MailConsumer", nums: 1)]
+#[Consumer(exchange: 'mail', routingKey: 'mail', queue: 'mail', name: "MailConsumer", nums: 1, enable: false)]
 class MailConsumer extends ConsumerMessage
 {
     public function consumeMessage($data, AMQPMessage $message): string

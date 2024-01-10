@@ -15,7 +15,9 @@ use App\Amqp\Producer\MailProducer;
 use App\Components\Email\EmailInterface;
 use App\Constants\ErrorCode;
 use App\Exception\BusinessException;
+use Carbon\Carbon;
 use Hyperf\Amqp\Producer;
+use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\DbConnection\Db;
 use Hyperf\HttpServer\Annotation\AutoController;
 
@@ -26,7 +28,8 @@ class IndexController extends AbstractController
     {
         $user = $this->request->input('user', 'Hyperf');
         $method = $this->request->getMethod();
-
+        $output = di()->get(StdoutLoggerInterface::class);
+        $output->info(Carbon::now());
         return [
             'method' => $method,
             'message' => "Hello {$user}.",
@@ -80,7 +83,6 @@ class IndexController extends AbstractController
         $message = new MailProducer($mailInfo);
         $producer = di()->get(Producer::class);
         $producer->produce($message);
-
         $runTime = '耗时: ' . (microtime(true) - $startTime) . ' s';
 
         return ['time' => date('Y-m-d H:i:s'), 'runtime' => $runTime];

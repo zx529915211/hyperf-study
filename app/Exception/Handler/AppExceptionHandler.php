@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace App\Exception\Handler;
 
 use App\Components\Response;
+use App\Constants\ErrorCode;
 use App\Exception\BusinessException;
 use Hyperf\Contract\StdoutLoggerInterface;
 use Hyperf\Di\Annotation\Inject;
@@ -21,6 +22,7 @@ use Hyperf\ExceptionHandler\Formatter\FormatterInterface;
 use Hyperf\HttpMessage\Exception\HttpException;
 use Hyperf\HttpMessage\Stream\SwooleStream;
 use Hyperf\Utils\ApplicationContext;
+use Hyperf\Validation\ValidationException;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
@@ -52,6 +54,12 @@ class AppExceptionHandler extends ExceptionHandler
         //业务异常处理
         if ($throwable instanceof BusinessException) {
             return $this->response->fail($throwable->getCode(), $throwable->getMessage());
+        }
+
+        // 针对表单的异常处理
+        if ($throwable instanceof ValidationException) {
+            $message = $throwable->validator->errors()->first();
+            return $this->response->fail(ErrorCode::FORM_ERROR, $message);
         }
 
         //HttpException
