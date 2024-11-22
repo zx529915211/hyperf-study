@@ -1,15 +1,16 @@
 <?php
 
 declare (strict_types=1);
+
 namespace App\Model;
 
 /**
- * @property int $id 
- * @property int $uid 
- * @property int $answers 
- * @property int $supports 
- * @property int $create_time 
- * @property int $update_time 
+ * @property int $id
+ * @property int $uid
+ * @property int $answers
+ * @property int $supports
+ * @property int $create_time
+ * @property int $update_time
  */
 class UserDynamic extends Model
 {
@@ -24,11 +25,11 @@ class UserDynamic extends Model
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['uid', 'answers', 'supports'];
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $casts = ['id' => 'integer', 'uid' => 'integer', 'answers' => 'integer', 'supports' => 'integer', 'create_time' => 'integer', 'update_time' => 'integer'];
+    protected $casts = ['uid' => 'integer', 'answers' => 'integer', 'supports' => 'integer'];
 }

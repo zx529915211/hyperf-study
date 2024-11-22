@@ -15,4 +15,18 @@ use Hyperf\DbConnection\Model\Model as BaseModel;
 
 abstract class Model extends BaseModel
 {
+
+    public $defaultCasts = ['id' => 'integer', 'create_time' => 'datetime', 'update_time' => 'datetime'];
+
+
+    public function __construct(array $attributes = [])
+    {
+
+        parent::__construct($attributes);
+        parent::mergeCasts($this->defaultCasts);
+    }
+
+    public const CREATED_AT = 'create_time';
+    public const UPDATED_AT = 'update_time';
+    protected $dateFormat = 'U';
 }

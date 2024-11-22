@@ -23,12 +23,14 @@ class ErrorExceptionHandler implements ListenerInterface
 
     public function process(object $event)
     {
-        //错误记录日志，dev环境下直接输出到命令行，线上环境记录到runtime/logs目录下
+        //错误记录日志，dev环境下增加一个直接输出到命令行，线上环境只记录到runtime/logs目录下
         set_error_handler(static function ($level, $message, $file = '', $line = 0): bool {
-            $outputLogger = env("APP_ENV", 'dev') == 'dev'
-                ? make(StdoutLoggerInterface::class)
-                : make(LoggerFactory::class)->get('log', 'default');
             $logFormat = sprintf("[level]:%s---[file]:%s---[line]:%s---[message]:%s", $level, $file, $line, $message);
+            if (env("APP_ENV", 'dev') == 'dev') {
+                $outputLogger = make(StdoutLoggerInterface::class);
+                $outputLogger->error($logFormat);
+            }
+            $outputLogger = make(LoggerFactory::class)->get('log', 'default');
             $outputLogger->error($logFormat);
             return true;
         });

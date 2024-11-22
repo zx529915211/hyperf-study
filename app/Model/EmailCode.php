@@ -12,9 +12,7 @@ namespace App\Model;
  */
 class EmailCode extends Model
 {
-    public const CREATED_AT = 'create_time';
-    public const UPDATED_AT = 'update_time';
-    protected $dateFormat = 'U';
+
     /**
      * The table associated with the model.
      *
@@ -32,5 +30,5 @@ class EmailCode extends Model
      *
      * @var array
      */
-    protected $casts = ['id' => 'integer', 'create_time' => 'datetime', 'update_time' => 'datetime'];
+    protected $casts = [];
 }

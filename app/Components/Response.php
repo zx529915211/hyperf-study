@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace App\Components;
 
 
@@ -20,8 +21,9 @@ class Response
     public function success($data = [])
     {
         return $this->response->json([
-            'code' => 0,
+            'code' => 1,
             'data' => $data,
+            'msg' => 'Ok',
         ]);
     }
 

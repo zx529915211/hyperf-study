@@ -13,6 +13,7 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=7.4",
+        "firebase/php-jwt": "^6.10",
         "hyperf/amqp": "^2.2",
         "hyperf/cache": "~2.2.0",
         "hyperf/command": "~2.2.0",

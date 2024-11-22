@@ -15,6 +15,7 @@ use App\Amqp\Producer\MailProducer;
 use App\Components\Email\EmailInterface;
 use App\Constants\ErrorCode;
 use App\Exception\BusinessException;
+use App\Model\EmailCode;
 use Carbon\Carbon;
 use Hyperf\Amqp\Producer;
 use Hyperf\Contract\StdoutLoggerInterface;
@@ -86,6 +87,21 @@ class IndexController extends AbstractController
         $runTime = '耗时: ' . (microtime(true) - $startTime) . ' s';
 
         return ['time' => date('Y-m-d H:i:s'), 'runtime' => $runTime];
+    }
+
+    public function modelTest()
+    {
+        $model = EmailCode::query()->get();
+        $data = $model->map(function($value){
+            /**@var $value EmailCode * */
+            return [
+                'id' => $value->id,
+                'email' => $value->email,
+                'code' => $value->code,
+                'create_time' => $value->create_time?->timestamp
+            ];
+        });
+        return $data;
     }
 
 
